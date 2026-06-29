@@ -25,7 +25,7 @@ namespace ToDoSommarProjekt.Pages.CategoriesPages
                 _context.Categories.Remove(category);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToPage("/categoriesPages/Index");
+            return RedirectToPage("/CategoriesPages/Index");
         }
     }
 }
