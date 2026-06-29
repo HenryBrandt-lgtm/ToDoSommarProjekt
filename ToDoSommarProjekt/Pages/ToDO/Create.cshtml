@@ -1,24 +1,40 @@
 ﻿@page
 @model ToDoSommarProjekt.Pages.ToDo.CreateModel
 @{
+    ViewData["Title"] = "Skapa ToDo";
 }
-<h1>Skapa ny todo</h1>
 
-<form method="post">
-<div>
-    <label asp-for="ToDoItem.CategoryId"></label>
-    <select asp-for="ToDoItem.CategoryId" asp-items="Model.Categories">
-        <option value="">-- Välj kategori --</option>
-    </select>
-    <span asp-validation-for="ToDoItem.CategoryId"></span>
-</div>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="mb-4">Skapa ny ToDo</h1>
 
+            <form method="post">
+                <div class="mb-3">
+                    <label asp-for="ToDoItem.Title" class="form-label"></label>
+                    <input asp-for="ToDoItem.Title" class="form-control" />
+                    <span asp-validation-for="ToDoItem.Title" class="text-danger"></span>
+                </div>
 
-    <div>
-        <label asp-for="ToDoItem.Title"></label>
-        <input asp-for="ToDoItem.Title" />
-        <span asp-validation-for="ToDoItem.Title"></span>
+                <div class="mb-3">
+                    <label asp-for="ToDoItem.Deadline" class="form-label"></label>
+                    <input asp-for="ToDoItem.Deadline" class="form-control" type="date" />
+                    <span asp-validation-for="ToDoItem.Deadline" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ToDoItem.CategoryId" class="form-label"></label>
+                    <select asp-for="ToDoItem.CategoryId" asp-items="Model.Categories" class="form-select">
+                        <option value="">-- Välj kategori --</option>
+                    </select>
+                    <span asp-validation-for="ToDoItem.CategoryId" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Spara</button>
+                    <a asp-page="/Index" class="btn btn-outline-secondary">Avbryt</a>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <button type="submit">Spara</button>
-</form>
+</div>

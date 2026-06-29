@@ -33,7 +33,7 @@ namespace ToDoSommarProjekt.Pages
             else if (!VisaKlara && !VisaEjKlara)
                 query = query.Where(t => false);
 
-            ToDoItems = await query.OrderBy(t => t.IsCompleted).ToListAsync();
+            ToDoItems = await query.OrderBy(t => t.IsCompleted).ThenBy(t => t.Deadline).ToListAsync();
         }
         public async Task<IActionResult> OnPostAsync(int id)
         {

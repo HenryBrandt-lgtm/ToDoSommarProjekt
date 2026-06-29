@@ -19,6 +19,12 @@
                 </div>
 
                 <div class="mb-3">
+                    <label asp-for="ToDoItem.Deadline" class="form-label"></label>
+                    <input asp-for="ToDoItem.Deadline" class="form-control" type="date" />
+                    <span asp-validation-for="ToDoItem.Deadline" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
                     <label asp-for="ToDoItem.CategoryId" class="form-label"></label>
                     <select asp-for="ToDoItem.CategoryId" asp-items="Model.Categories" class="form-select">
                         <option value="">-- Välj kategori --</option>
