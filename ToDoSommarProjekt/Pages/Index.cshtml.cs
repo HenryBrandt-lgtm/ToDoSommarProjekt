@@ -16,9 +16,34 @@ namespace ToDoSommarProjekt.Pages
 
         public List<ToDoItem> ToDoItems { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public bool VisaKlara { get; set; } = true;
+
+        [BindProperty(SupportsGet = true)]
+        public bool VisaEjKlara { get; set; } = true;
+
         public async Task OnGetAsync()
         {
-            ToDoItems = await _context.ToDoItems.Include(t => t.Category).ToListAsync();
+            var query = _context.ToDoItems.Include(t => t.Category).AsQueryable();
+
+            if (VisaKlara && !VisaEjKlara)
+                query = query.Where(t => t.IsCompleted);
+            else if (!VisaKlara && VisaEjKlara)
+                query = query.Where(t => !t.IsCompleted);
+            else if (!VisaKlara && !VisaEjKlara)
+                query = query.Where(t => false);
+
+            ToDoItems = await query.OrderBy(t => t.IsCompleted).ToListAsync();
+        }
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            var toDoItem = await _context.ToDoItems.FindAsync(id);
+            if (toDoItem != null)
+            {
+                toDoItem.IsCompleted = !toDoItem.IsCompleted;
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToPage("/Index");
         }
     }
 }

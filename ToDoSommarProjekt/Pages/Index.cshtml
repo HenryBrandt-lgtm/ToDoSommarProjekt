@@ -4,17 +4,40 @@
     ViewData["Title"] = "Mina todos";
 }
 
-<h1>Mina todos</h1>
+<h1>Mina ToDo's</h1>
 
 <a asp-page="/ToDo/Create">Skapa ny todo</a>
 
+<form method="get">
+    <input type="hidden" name="VisaKlara" id="VisaKlaraHidden" value="@Model.VisaKlara.ToString().ToLower()" />
+    <label>
+        <input type="checkbox" id="VisaKlaraCheck" @(Model.VisaKlara ? "checked" : "") />
+        Visa klara
+    </label>
+
+    <input type="hidden" name="VisaEjKlara" id="VisaEjKlaraHidden" value="@Model.VisaEjKlara.ToString().ToLower()" />
+    <label>
+        <input type="checkbox" id="VisaEjKlaraCheck" @(Model.VisaEjKlara ? "checked" : "") />
+        Visa ej klara
+    </label>
+
+    <button type="submit">Filtrera</button>
+</form>
+<script>
+    document.getElementById('VisaKlaraCheck').addEventListener('change', function() {
+        document.getElementById('VisaKlaraHidden').value = this.checked;
+    });
+    document.getElementById('VisaEjKlaraCheck').addEventListener('change', function() {
+        document.getElementById('VisaEjKlaraHidden').value = this.checked;
+    });
+</script>
 <table>
     <thead>
         <tr>
             <th>Titel</th>
             <th>Kategori</th>
-            <th>Klar</th>
             <th>Deadline</th>
+            <th>Klar</th>
         </tr>
     </thead>
     <tbody>
@@ -23,10 +46,19 @@
             <tr>
                 <td>@item.Title</td>
                 <td>@item.Category?.Name</td>
-                <td>@item.IsCompleted</td>
                 <td>@item.Deadline</td>
                 <td>
+                    <form method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="checkbox"
+                               asp-page-handler="Toggle"
+                               onchange="this.form.submit()"
+                        @(item.IsCompleted ? "checked" : "") />
+                    </form>
+                </td>
+                <td>
                     <a asp-page="/ToDo/Edit" asp-route-id="@item.Id">Redigera</a>
+                    <a asp-page="/ToDo/Delete" asp-route-id="@item.Id">Radera</a>                    
                 </td>
             </tr>
         }

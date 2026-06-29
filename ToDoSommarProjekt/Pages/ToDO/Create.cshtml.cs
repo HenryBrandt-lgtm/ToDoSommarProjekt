@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ToDoSommarProjekt.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace ToDoSommarProjekt.Pages.ToDO
+namespace ToDoSommarProjekt.Pages.ToDo
 {
     public class CreateModel : PageModel
     {
@@ -31,7 +31,7 @@ namespace ToDoSommarProjekt.Pages.ToDO
             _context.ToDoItems.Add(ToDoItem);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Index");
         }
     }
 }

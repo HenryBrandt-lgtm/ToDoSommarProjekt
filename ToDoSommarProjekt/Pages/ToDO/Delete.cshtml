@@ -1,4 +1,15 @@
 ﻿@page
-@model ToDoSommarProjekt.Pages.DeleteModel
+@model ToDoSommarProjekt.Pages.ToDo.DeleteModel
 @{
+    ViewData["Title"] = "Radera todo";
 }
+
+<h1>Vill du radera denna todo?</h1>
+<form method="post">
+    <input type="hidden" asp-for="ToDoItem.Id" />
+
+    <p>Titel: @Model.ToDoItem.Title</p>
+
+    <button type="submit">Radera</button>
+    <a asp-page="/Index">Avbryt</a>
+</form>

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ToDoSommarProjekt.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace ToDoSommarProjekt.Pages.ToDO
+namespace ToDoSommarProjekt.Pages.ToDo
 {
     public class EditModel : PageModel
     {
@@ -33,7 +33,7 @@ namespace ToDoSommarProjekt.Pages.ToDO
             _context.ToDoItems.Update(ToDoItem);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Index");
         }
     }
 }
