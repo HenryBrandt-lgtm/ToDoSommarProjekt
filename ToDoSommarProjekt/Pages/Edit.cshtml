@@ -1,0 +1,27 @@
+﻿@page "{id:int}"
+@model ToDoSommarProjekt.Pages.EditModel
+@{
+    ViewData["Title"] = "Redigera todo";
+}
+
+<h1>Redigera todo</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="ToDoItem.Id" />
+
+    <div>
+        <label asp-for="ToDoItem.Title"></label>
+        <input asp-for="ToDoItem.Title" />
+        <span asp-validation-for="ToDoItem.Title"></span>
+    </div>
+
+    <div>
+        <label asp-for="ToDoItem.CategoryId"></label>
+        <select asp-for="ToDoItem.CategoryId" asp-items="Model.Categories">
+            <option value="">-- Välj kategori --</option>
+        </select>
+        <span asp-validation-for="ToDoItem.CategoryId"></span>
+    </div>
+
+    <button type="submit">Spara</button>
+</form>

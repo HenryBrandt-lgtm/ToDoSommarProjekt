@@ -25,6 +25,9 @@
                 <td>@item.Category?.Name</td>
                 <td>@item.IsCompleted</td>
                 <td>@item.Deadline</td>
+                <td>
+                    <a asp-page="/Edit" asp-route-id="@item.Id">Redigera</a>
+                </td>
             </tr>
         }
     </tbody>
