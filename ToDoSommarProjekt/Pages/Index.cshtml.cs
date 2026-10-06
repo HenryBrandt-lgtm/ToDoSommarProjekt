@@ -36,7 +36,8 @@ namespace ToDoSommarProjekt.Pages
 
             ToDoItems = await query.OrderBy(t => t.IsCompleted).ThenBy(t => t.Deadline).Select(t => new ToDoItemViewModel
             {
-                CategoryId = t.Id,
+                Id = t.Id,
+                CategoryId = t.CategoryId,
                 Title = t.Title,
                 IsCompleted = t.IsCompleted,
                 Deadline = t.Deadline,

@@ -37,22 +37,22 @@
         <tbody>
             @foreach (var item in Model.ToDoItems)
             {
-                <tr class="@(item.IsCompleted ? "table-success" : item.Deadline < DateOnly.FromDateTime(DateTime.Now) ? "table-danger" : "")">
-                    <td>@item.Title</td>
+                <tr class="position-relative @(item.IsCompleted ? "table-success" : item.Deadline < DateOnly.FromDateTime(DateTime.Now) ? "table-danger" : "")">
+                    <td><a asp-page="/ToDo/Info" asp-route-id="@item.Id" class="stretched-link text-decoration-none text-body">@item.Title</a></td>
                     <td>@item.Category?.Name</td>
                     <td>@item.Deadline</td>
-                    <td>
+                    <td class="position-relative z-1">
                         <form method="post">
-                            <input type="hidden" name="id" value="@item.CategoryId" />
+                            <input type="hidden" name="id" value="@item.Id" />
                             <input class="form-check-input" type="checkbox"
                                    asp-page-handler="Toggle"
                                    onchange="this.form.submit()"
                             @(item.IsCompleted ? "checked" : "") />
                         </form>
                     </td>
-                    <td>
-                        <a asp-page="/ToDo/Edit" asp-route-id="@item.CategoryId" class="btn btn-sm btn-outline-secondary">Redigera</a>
-                        <a asp-page="/ToDo/Delete" asp-route-id="@item.CategoryId" class="btn btn-sm btn-outline-danger">Radera</a>
+                    <td class ="position-relative z-1">
+                        <a asp-page="/ToDo/Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Redigera</a>
+                        <a asp-page="/ToDo/Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Radera</a>
                     </td>
                 </tr>
             }

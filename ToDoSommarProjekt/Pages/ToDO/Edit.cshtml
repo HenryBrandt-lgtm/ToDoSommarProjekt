@@ -32,6 +32,11 @@
                     <span asp-validation-for="ToDoItem.CategoryId" class="text-danger"></span>
                     <a asp-page="/CategoriesPages/Create" asp-route-returnUrl="/ToDo/Edit/@Model.ToDoItem.Id" class="text-muted small">Hantera kategorier</a>
                 </div>
+                <div class="mb-3">
+                    <label asp-for="ToDoItem.Info" class="form-label">Mer information</label>
+                    <textarea asp-for="ToDoItem.Info" class="form-control" rows="6"></textarea>
+                    <span asp-validation-for="ToDoItem.Info" class="text-danger"></span>
+                </div>
 
 
                 <div class="d-flex gap-2">
