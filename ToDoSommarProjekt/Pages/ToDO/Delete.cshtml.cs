@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using ToDoSommarProjekt.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace ToDoSommarProjekt.Pages.ToDo
 {
@@ -16,13 +14,19 @@ namespace ToDoSommarProjekt.Pages.ToDo
         }
         [BindProperty]
         public ToDoItem ToDoItem { get; set; }
-        public async Task OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             ToDoItem = await _context.ToDoItems.FindAsync(id);
+            if (ToDoItem == null)
+            {
+                return NotFound();
+            }
+            return Page();
         }
         public async Task<IActionResult> OnPostAsync(int id)
         {
             var toDoItem = await _context.ToDoItems.FindAsync(id);
+
             if (toDoItem != null)
             {
                 _context.ToDoItems.Remove(toDoItem);

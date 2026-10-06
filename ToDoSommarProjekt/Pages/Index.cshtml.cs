@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ToDoSommarProjekt.Data;
 using Microsoft.EntityFrameworkCore;
+using ToDoSommarProjekt.ViewModels;
 
 namespace ToDoSommarProjekt.Pages
 {
@@ -14,7 +15,7 @@ namespace ToDoSommarProjekt.Pages
             _context = context;
         }
 
-        public List<ToDoItem> ToDoItems { get; set; }
+        public List<ToDoItemViewModel> ToDoItems { get; set; } = new();
 
         [BindProperty(SupportsGet = true)]
         public bool VisaKlara { get; set; } = true;
@@ -33,7 +34,14 @@ namespace ToDoSommarProjekt.Pages
             else if (!VisaKlara && !VisaEjKlara)
                 query = query.Where(t => false);
 
-            ToDoItems = await query.OrderBy(t => t.IsCompleted).ThenBy(t => t.Deadline).ToListAsync();
+            ToDoItems = await query.OrderBy(t => t.IsCompleted).ThenBy(t => t.Deadline).Select(t => new ToDoItemViewModel
+            {
+                CategoryId = t.Id,
+                Title = t.Title,
+                IsCompleted = t.IsCompleted,
+                Deadline = t.Deadline,
+                Category = t.Category
+            }).ToListAsync();
         }
         public async Task<IActionResult> OnPostAsync(int id)
         {

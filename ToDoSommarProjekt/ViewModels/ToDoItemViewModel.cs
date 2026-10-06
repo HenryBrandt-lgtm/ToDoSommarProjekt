@@ -1,22 +1,18 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using ToDoSommarProjekt.Data;
 
-namespace ToDoSommarProjekt.Data
+namespace ToDoSommarProjekt.ViewModels
 {
-    public class ToDoItem
+    public class ToDoItemViewModel
     {
-        public int Id { get; set; }
 
         [Required]
         public string Title { get; set; }
 
         public bool IsCompleted { get; set; } = false;
 
-        public DateOnly CreatedAt { get; set; }
-
-        public DateOnly? Deadline { get; set; }
-
         public int CategoryId { get; set; }
+        public DateOnly? Deadline { get; set; }
 
         public Category? Category { get; set; }
 

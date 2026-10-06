@@ -43,7 +43,7 @@
                     <td>@item.Deadline</td>
                     <td>
                         <form method="post">
-                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="hidden" name="id" value="@item.CategoryId" />
                             <input class="form-check-input" type="checkbox"
                                    asp-page-handler="Toggle"
                                    onchange="this.form.submit()"
@@ -51,8 +51,8 @@
                         </form>
                     </td>
                     <td>
-                        <a asp-page="/ToDo/Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">Redigera</a>
-                        <a asp-page="/ToDo/Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Radera</a>
+                        <a asp-page="/ToDo/Edit" asp-route-id="@item.CategoryId" class="btn btn-sm btn-outline-secondary">Redigera</a>
+                        <a asp-page="/ToDo/Delete" asp-route-id="@item.CategoryId" class="btn btn-sm btn-outline-danger">Radera</a>
                     </td>
                 </tr>
             }
