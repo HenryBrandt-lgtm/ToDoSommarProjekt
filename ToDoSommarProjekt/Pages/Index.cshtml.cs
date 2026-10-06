@@ -20,7 +20,7 @@ namespace ToDoSommarProjekt.Pages
 
         public int TotalPages { get; set; }
 
-        private const int PageSize = 10;
+        private const int PageSize = 5;
 
         public async Task OnGetAsync(int pageNumber = 1)
         {
