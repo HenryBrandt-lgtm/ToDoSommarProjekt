@@ -58,6 +58,36 @@
             }
         </tbody>
     </table>
+    @if (Model.TotalPages > 1)
+    {
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(Model.PageNumber <= 1 ? "disabled" : "")">
+                    <a class="page-link" asp-page="/Index"
+                       asp-route-pageNumber="@(Model.PageNumber - 1)"
+                       asp-route-VisaKlara="@Model.VisaKlara"
+                       asp-route-VisaEjKlara="@Model.VisaEjKlara">Föregående</a>
+                </li>
+
+                @for (var i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" asp-page="/Index"
+                           asp-route-pageNumber="@i"
+                           asp-route-VisaKlara="@Model.VisaKlara"
+                           asp-route-VisaEjKlara="@Model.VisaEjKlara">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(Model.PageNumber >= Model.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-page="/Index"
+                       asp-route-pageNumber="@(Model.PageNumber + 1)"
+                       asp-route-VisaKlara="@Model.VisaKlara"
+                       asp-route-VisaEjKlara="@Model.VisaEjKlara">Nästa</a>
+                </li>
+            </ul>
+        </nav>
+    }
 </div>
 
 @section Scripts {

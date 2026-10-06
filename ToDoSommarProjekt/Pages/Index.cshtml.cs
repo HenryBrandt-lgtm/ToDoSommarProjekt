@@ -6,15 +6,8 @@ using ToDoSommarProjekt.ViewModels;
 
 namespace ToDoSommarProjekt.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel(ApplicationDbContext context) : PageModel
     {
-        private readonly ApplicationDbContext _context;
-
-        public IndexModel(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
         public List<ToDoItemViewModel> ToDoItems { get; set; } = new();
 
         [BindProperty(SupportsGet = true)]
@@ -23,9 +16,17 @@ namespace ToDoSommarProjekt.Pages
         [BindProperty(SupportsGet = true)]
         public bool VisaEjKlara { get; set; } = true;
 
-        public async Task OnGetAsync()
+        public int PageNumber { get; set; } = 1;
+
+        public int TotalPages { get; set; }
+
+        private const int PageSize = 10;
+
+        public async Task OnGetAsync(int pageNumber = 1)
         {
-            var query = _context.ToDoItems.Include(t => t.Category).AsQueryable();
+            PageNumber = pageNumber;
+
+            var query = context.ToDoItems.Include(t => t.Category).AsQueryable();
 
             if (VisaKlara && !VisaEjKlara)
                 query = query.Where(t => t.IsCompleted);
@@ -34,7 +35,14 @@ namespace ToDoSommarProjekt.Pages
             else if (!VisaKlara && !VisaEjKlara)
                 query = query.Where(t => false);
 
-            ToDoItems = await query.OrderBy(t => t.IsCompleted).ThenBy(t => t.Deadline).Select(t => new ToDoItemViewModel
+            var totalItems = await query.CountAsync();
+            TotalPages = (int)Math.Ceiling(totalItems / (double)PageSize);
+            
+            ToDoItems = await query.OrderBy(t => t.IsCompleted)
+                .ThenBy(t => t.Deadline)
+                .Skip((PageNumber - 1) * PageSize)
+                .Take(PageSize)
+                .Select(t => new ToDoItemViewModel
             {
                 Id = t.Id,
                 CategoryId = t.CategoryId,
@@ -46,11 +54,11 @@ namespace ToDoSommarProjekt.Pages
         }
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            var toDoItem = await _context.ToDoItems.FindAsync(id);
+            var toDoItem = await context.ToDoItems.FindAsync(id);
             if (toDoItem != null)
             {
                 toDoItem.IsCompleted = !toDoItem.IsCompleted;
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             return RedirectToPage("/Index");
         }
